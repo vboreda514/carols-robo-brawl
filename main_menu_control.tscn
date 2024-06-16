@@ -1,6 +1,19 @@
-[gd_scene load_steps=2 format=3 uid="uid://b3ebayt7c5sfv"]
+[gd_scene load_steps=5 format=3 uid="uid://b3ebayt7c5sfv"]
 
-[ext_resource type="Theme" uid="uid://cdqpmscq7v8gi" path="res://main_menu_theme.tres" id="1_543ps"]
+[ext_resource type="Theme" uid="uid://cdqpmscq7v8gi" path="res://MainMenuResources/main_menu_theme.tres" id="1_543ps"]
+
+[sub_resource type="Gradient" id="Gradient_j4ckb"]
+offsets = PackedFloat32Array(0, 0.655844)
+colors = PackedColorArray(0.298039, 0.427451, 0.788235, 1, 0.466667, 0.678431, 0.890196, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_8gsnx"]
+gradient = SubResource("Gradient_j4ckb")
+fill_from = Vector2(0, 1)
+fill_to = Vector2(0, 0.0412844)
+
+[sub_resource type="LabelSettings" id="LabelSettings_6tqio"]
+font_size = 30
+font_color = Color(0.99, 0.74877, 0.1386, 1)
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -11,10 +24,26 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_543ps")
 
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_8gsnx")
+
 [node name="MarginContainer" type="MarginContainer" parent="."]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 80
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 80
+theme_override_constants/margin_bottom = 50
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
@@ -22,7 +51,14 @@ layout_mode = 2
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Carol's Robo Brawl"
+label_settings = SubResource("LabelSettings_6tqio")
+horizontal_alignment = 1
 
-[node name="Button" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_right = 50
+
+[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/MarginContainer"]
 layout_mode = 2
 text = "New Game"
