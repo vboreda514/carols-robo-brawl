@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://b3ebayt7c5sfv"]
+[gd_scene load_steps=6 format=3 uid="uid://b3ebayt7c5sfv"]
 
-[ext_resource type="Theme" uid="uid://cdqpmscq7v8gi" path="res://MainMenuResources/main_menu_theme.tres" id="1_543ps"]
+[ext_resource type="Theme" uid="uid://cdqpmscq7v8gi" path="res://MainMenuResources/main_menu_theme.tres" id="1_hmwws"]
+[ext_resource type="Script" path="res://MainMenuResources/new_game_button.cs" id="2_wyeuy"]
 
 [sub_resource type="Gradient" id="Gradient_j4ckb"]
 offsets = PackedFloat32Array(0, 0.655844)
@@ -22,7 +23,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("1_543ps")
+theme = ExtResource("1_hmwws")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 1
@@ -62,3 +63,6 @@ theme_override_constants/margin_right = 50
 [node name="Button" type="Button" parent="MarginContainer/VBoxContainer/MarginContainer"]
 layout_mode = 2
 text = "New Game"
+script = ExtResource("2_wyeuy")
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/MarginContainer/Button" to="MarginContainer/VBoxContainer/MarginContainer/Button" method="_on_pressed"]
