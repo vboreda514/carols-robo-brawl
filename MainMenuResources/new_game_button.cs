@@ -18,4 +18,3 @@ public partial class new_game_button : Button
 		GetTree().ChangeSceneToFile("res://Scenes/game_2d.tscn");
 	}
 }
-
