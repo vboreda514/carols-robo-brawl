@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class mapeditor_camera2d : Camera2D
+public partial class MapEditorCamera2D : Camera2D
 {
 	[Export] public float Speed = 450f; // pixels per second movement speed
 	[Export] public float ZoomSpeed = 0.1f; // zoom speed
