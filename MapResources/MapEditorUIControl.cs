@@ -3,18 +3,20 @@ using System;
 
 public partial class MapEditorUIControl : Control
 {	
-	private Button _saveButton;
 	private FileDialog _saveDialog;
 	private FileDialog _loadDialog;
-	private TileMapLayer _tileMapLayer;
+	private TileMapLayer _tileMapLayerFloor;
+	private TileMapLayer _tileMapLayerExtras;
+	private Label _mapEditorLabel;
 	
 	private string _currentFilePath = string.Empty;
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{	
-		_saveButton = GetNode<Button>("VBoxContainer/PanelContainer/CenterContainer/HBoxContainer/Button");
-		_tileMapLayer = GetNode<TileMapLayer>("../../TileMapLayer");
+		_tileMapLayerFloor = GetNode<TileMapLayer>("../../TileMapLayer");
+		_tileMapLayerExtras = GetNode<TileMapLayer>("../../TileMapLayer2");
+		_mapEditorLabel = GetNode<Label>("VBoxContainer/PanelContainer/MarginContainer/HBoxContainer/Label");
 		
 		// save map file dialog window
 		_saveDialog = new FileDialog();
@@ -49,13 +51,11 @@ public partial class MapEditorUIControl : Control
 		// if no file is already loaded then bring up file dialog box
 		if (string.IsNullOrEmpty(_currentFilePath))
 		{
-			
 			_saveDialog.PopupCentered();
 		}
 		// if a file is loaded then overwrite that file
 		else
 		{
-			
 			SaveTileMap(_currentFilePath);
 		}
 	}
@@ -63,6 +63,7 @@ public partial class MapEditorUIControl : Control
 	private void OnFileSelectedSaveDialog(string path)
 	{
 		_currentFilePath = path;
+		_mapEditorLabel.Text = FormatFilename(path);
 		SaveTileMap(path);
 	}
 
@@ -71,17 +72,22 @@ public partial class MapEditorUIControl : Control
 		try
 		{
 			// called PackedByteArray in docs
-			byte[] tilemapData = _tileMapLayer.TileMapData;
+			byte[] tilemapDataFloor = _tileMapLayerFloor.TileMapData;
+			byte[] tilemapDataExtras = _tileMapLayerExtras.TileMapData;
 		
-			// use fileaccess to write the byte array to a file
+			// use fileaccess to write each layer's byte array length and info to the file
 			using var file = FileAccess.Open(path, FileAccess.ModeFlags.Write);
 			if (file == null)
 			{
-				GD.PrintErr($"Failed to open file for writing: {path}");
+				GD.PushError($"Failed to open file for writing: {path}");
 				return;
 			}
-
-			file.StoreBuffer(tilemapData);
+			
+			file.Store32((uint)tilemapDataFloor.Length);
+			file.StoreBuffer(tilemapDataFloor);
+			file.Store32((uint)tilemapDataExtras.Length);
+			file.StoreBuffer(tilemapDataExtras);
+			
 			GD.Print($"TileMap saved successfully to: {path}");
 		}
 		catch (Exception e)
@@ -105,13 +111,20 @@ public partial class MapEditorUIControl : Control
 			using var file = FileAccess.Open(path, FileAccess.ModeFlags.Read);
 			if (file == null)
 			{
-				GD.PrintErr($"Failed to open file for reading: {path}");
+				GD.PushError($"Failed to open file for reading: {path}");
 				return;
 			}
-
-			// read into byte[] (PackedByteArray in docs) and load into tilemaplayer
-			byte[] tilemapData = file.GetBuffer((long)file.GetLength());
-			_tileMapLayer.TileMapData = tilemapData;
+			
+			_mapEditorLabel.Text = FormatFilename(path);
+			
+			// read file into byte[] instances (PackedByteArray in docs) and load into tilemaplayers
+			uint floorLength = file.Get32();
+			byte[] tilemapDataFloor = file.GetBuffer((int)floorLength);
+			uint extrasLength = file.Get32();
+			byte[] tilemapDataExtras = file.GetBuffer((int)extrasLength);
+			
+			_tileMapLayerFloor.TileMapData = tilemapDataFloor;
+			_tileMapLayerExtras.TileMapData = tilemapDataExtras;
 			
 			GD.Print($"TileMap loaded successfully from: {path}");
 		}
@@ -119,6 +132,11 @@ public partial class MapEditorUIControl : Control
 		{
 			GD.PushError($"Exception while loading TileMap: {e.Message}");
 		}
+	}
+	
+	private string FormatFilename(string path) { 
+		int i = path.LastIndexOf('/') + 1;
+		return "Currently Editing: " + path.Substring(i);
 	}
 	
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
