@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://b3ebayt7c5sfv"]
+[gd_scene load_steps=7 format=3 uid="uid://b3ebayt7c5sfv"]
 
 [ext_resource type="Theme" uid="uid://cdqpmscq7v8gi" path="res://MainMenuResources/main_menu_theme.tres" id="1_hmwws"]
 [ext_resource type="Script" path="res://MainMenuResources/new_game_button.cs" id="2_wyeuy"]
+[ext_resource type="Script" path="res://MainMenuResources/map_editor_button.cs" id="3_yj8fm"]
 
 [sub_resource type="Gradient" id="Gradient_j4ckb"]
 offsets = PackedFloat32Array(0, 0.655844)
@@ -65,4 +66,15 @@ layout_mode = 2
 text = "New Game"
 script = ExtResource("2_wyeuy")
 
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_right = 50
+
+[node name="Button2" type="Button" parent="MarginContainer/VBoxContainer/MarginContainer2"]
+layout_mode = 2
+text = "Map Editor"
+script = ExtResource("3_yj8fm")
+
 [connection signal="pressed" from="MarginContainer/VBoxContainer/MarginContainer/Button" to="MarginContainer/VBoxContainer/MarginContainer/Button" method="_on_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/MarginContainer2/Button2" to="MarginContainer/VBoxContainer/MarginContainer2/Button2" method="_on_pressed"]
