@@ -1,15 +1,39 @@
-[gd_scene load_steps=8 format=4 uid="uid://dhr8alaruewkt"]
+[gd_scene load_steps=21 format=4 uid="uid://dhr8alaruewkt"]
 
 [ext_resource type="TileSet" uid="uid://dwvpkbnhh8416" path="res://MapResources/map_tileset_floors.tres" id="1_h677p"]
 [ext_resource type="TileSet" uid="uid://ci8k4y0d7oolx" path="res://MapResources/map_tileset_extras.tres" id="2_badwf"]
 [ext_resource type="Script" path="res://MapResources/MapEditorCamera2D.cs" id="2_d4nrf"]
 [ext_resource type="Theme" uid="uid://vtfme6yy80t1" path="res://MapResources/mapeditor_theme.tres" id="3_1nu24"]
 [ext_resource type="Script" path="res://MapResources/MapEditorUIControl.cs" id="4_a5qs0"]
+[ext_resource type="ButtonGroup" uid="uid://bx3raq8kudh14" path="res://MapResources/mapeditor_tiles_buttongroup.tres" id="6_h0fub"]
+[ext_resource type="Texture2D" uid="uid://dfddpnvxtmwn3" path="res://MapResources/MapEditorButtons/floor_button.png" id="7_rv65a"]
+[ext_resource type="Texture2D" uid="uid://bdppaaensywug" path="res://MapResources/MapEditorButtons/spawn_button.png" id="8_5bt61"]
+[ext_resource type="Texture2D" uid="uid://b1mhtjwi870np" path="res://MapResources/MapEditorButtons/flag_button.png" id="9_0tkpf"]
+[ext_resource type="Texture2D" uid="uid://ceb2alp17r2ml" path="res://MapResources/MapEditorButtons/powerup1_button.png" id="10_kdsc8"]
+[ext_resource type="Texture2D" uid="uid://yoks7ublti58" path="res://MapResources/MapEditorButtons/powerup2_button.png" id="11_mgpub"]
+[ext_resource type="Texture2D" uid="uid://bq5pvvgherayi" path="res://MapResources/MapEditorButtons/yellowconveyor_button.png" id="12_imktm"]
+[ext_resource type="Texture2D" uid="uid://c1mgud8lfcd8j" path="res://MapResources/MapEditorButtons/blueconveyor_button.png" id="13_nsxep"]
+[ext_resource type="Texture2D" uid="uid://suk6a7lbbjcx" path="res://MapResources/MapEditorButtons/leftrotate_button.png" id="14_x28pm"]
+[ext_resource type="Texture2D" uid="uid://cp3ofdv6bq4xg" path="res://MapResources/MapEditorButtons/rightrotate_button.png" id="15_h8re3"]
+[ext_resource type="Texture2D" uid="uid://byscv3a20rwba" path="res://MapResources/MapEditorButtons/wall_button.png" id="16_nx4cd"]
+[ext_resource type="Texture2D" uid="uid://cbywwfdg0gl7f" path="res://MapResources/MapEditorButtons/laser_button.png" id="17_8sf87"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lttq8"]
 bg_color = Color(0.13518, 0.258926, 0.31957, 1)
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_moekt"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mr2hg"]
+bg_color = Color(0.244395, 0.369248, 0.388292, 0.439216)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 
 [node name="Node2D" type="Node2D"]
 
@@ -22,8 +46,7 @@ tile_map_data = PackedByteArray("AAA8ABsAAQAAAAAAAAA9ABkAAQAAAAAAAAA+ABcAAQAAAAA
 tile_set = ExtResource("2_badwf")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(1666, 706)
-zoom = Vector2(1.5, 1.5)
+position = Vector2(3200, 1400)
 limit_smoothed = true
 position_smoothing_enabled = true
 script = ExtResource("2_d4nrf")
@@ -79,12 +102,130 @@ size_flags_vertical = 3
 text = "Currently Editing: New Map"
 horizontal_alignment = 1
 
-[node name="Label2" type="Label" parent="CanvasLayer/Control/VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 10
-text = "bottom ui bar wow look how amazing this ui is"
-horizontal_alignment = 3
-vertical_alignment = 2
+theme_override_constants/margin_left = 100
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 100
+theme_override_constants/margin_bottom = 5
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/Control/VBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 10
+theme_override_styles/panel = SubResource("StyleBoxFlat_mr2hg")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/VBoxContainer/MarginContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/VBoxContainer/MarginContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="FloorButton" type="TextureButton" parent="CanvasLayer/Control/VBoxContainer/MarginContainer/PanelContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+toggle_mode = true
+button_group = ExtResource("6_h0fub")
+texture_normal = ExtResource("7_rv65a")
+
+[node name="SpawnButton" type="TextureButton" parent="CanvasLayer/Control/VBoxContainer/MarginContainer/PanelContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+toggle_mode = true
+button_group = ExtResource("6_h0fub")
+texture_normal = ExtResource("8_5bt61")
+
+[node name="FlagButton" type="TextureButton" parent="CanvasLayer/Control/VBoxContainer/MarginContainer/PanelContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+toggle_mode = true
+button_group = ExtResource("6_h0fub")
+texture_normal = ExtResource("9_0tkpf")
+stretch_mode = 3
+
+[node name="Powerup1Button" type="TextureButton" parent="CanvasLayer/Control/VBoxContainer/MarginContainer/PanelContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+toggle_mode = true
+button_group = ExtResource("6_h0fub")
+texture_normal = ExtResource("10_kdsc8")
+
+[node name="Powerup2Button" type="TextureButton" parent="CanvasLayer/Control/VBoxContainer/MarginContainer/PanelContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+toggle_mode = true
+button_group = ExtResource("6_h0fub")
+texture_normal = ExtResource("11_mgpub")
+
+[node name="YellowConveyorButton" type="TextureButton" parent="CanvasLayer/Control/VBoxContainer/MarginContainer/PanelContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+toggle_mode = true
+button_group = ExtResource("6_h0fub")
+texture_normal = ExtResource("12_imktm")
+
+[node name="BlueConveyorButton" type="TextureButton" parent="CanvasLayer/Control/VBoxContainer/MarginContainer/PanelContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+toggle_mode = true
+button_group = ExtResource("6_h0fub")
+texture_normal = ExtResource("13_nsxep")
+
+[node name="LeftRotateButton" type="TextureButton" parent="CanvasLayer/Control/VBoxContainer/MarginContainer/PanelContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+toggle_mode = true
+button_group = ExtResource("6_h0fub")
+texture_normal = ExtResource("14_x28pm")
+
+[node name="RightRotateButton" type="TextureButton" parent="CanvasLayer/Control/VBoxContainer/MarginContainer/PanelContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+toggle_mode = true
+button_group = ExtResource("6_h0fub")
+texture_normal = ExtResource("15_h8re3")
+
+[node name="WallButton" type="TextureButton" parent="CanvasLayer/Control/VBoxContainer/MarginContainer/PanelContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+toggle_mode = true
+button_group = ExtResource("6_h0fub")
+texture_normal = ExtResource("16_nx4cd")
+
+[node name="LaserButton" type="TextureButton" parent="CanvasLayer/Control/VBoxContainer/MarginContainer/PanelContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+toggle_mode = true
+button_group = ExtResource("6_h0fub")
+texture_normal = ExtResource("17_8sf87")
 
 [connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/PanelContainer/MarginContainer/HBoxContainer/Button" to="CanvasLayer/Control" method="OnSaveButtonPressed"]
 [connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/PanelContainer/MarginContainer/HBoxContainer/Button2" to="CanvasLayer/Control" method="OnLoadButtonPressed"]
+[connection signal="mouse_entered" from="CanvasLayer/Control/VBoxContainer/MarginContainer/PanelContainer/MarginContainer/HBoxContainer/FloorButton" to="CanvasLayer/Control" method="OnTextureButtonHovered" binds= ["FloorButton"]]
+[connection signal="mouse_exited" from="CanvasLayer/Control/VBoxContainer/MarginContainer/PanelContainer/MarginContainer/HBoxContainer/FloorButton" to="CanvasLayer/Control" method="OnTextureButtonExited" binds= ["FloorButton"]]
+[connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/MarginContainer/PanelContainer/MarginContainer/HBoxContainer/FloorButton" to="CanvasLayer/Control" method="OnTextureButtonPressed" binds= ["FloorButton"]]
+[connection signal="mouse_entered" from="CanvasLayer/Control/VBoxContainer/MarginContainer/PanelContainer/MarginContainer/HBoxContainer/SpawnButton" to="CanvasLayer/Control" method="OnTextureButtonHovered" binds= ["SpawnButton"]]
+[connection signal="mouse_exited" from="CanvasLayer/Control/VBoxContainer/MarginContainer/PanelContainer/MarginContainer/HBoxContainer/SpawnButton" to="CanvasLayer/Control" method="OnTextureButtonExited" binds= ["SpawnButton"]]
+[connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/MarginContainer/PanelContainer/MarginContainer/HBoxContainer/SpawnButton" to="CanvasLayer/Control" method="OnTextureButtonPressed" binds= ["SpawnButton"]]
+[connection signal="mouse_entered" from="CanvasLayer/Control/VBoxContainer/MarginContainer/PanelContainer/MarginContainer/HBoxContainer/FlagButton" to="CanvasLayer/Control" method="OnTextureButtonHovered" binds= ["FlagButton"]]
+[connection signal="mouse_exited" from="CanvasLayer/Control/VBoxContainer/MarginContainer/PanelContainer/MarginContainer/HBoxContainer/FlagButton" to="CanvasLayer/Control" method="OnTextureButtonExited" binds= ["FlagButton"]]
+[connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/MarginContainer/PanelContainer/MarginContainer/HBoxContainer/FlagButton" to="CanvasLayer/Control" method="OnTextureButtonPressed" binds= ["FlagButton"]]
+[connection signal="mouse_entered" from="CanvasLayer/Control/VBoxContainer/MarginContainer/PanelContainer/MarginContainer/HBoxContainer/Powerup1Button" to="CanvasLayer/Control" method="OnTextureButtonHovered" binds= ["Powerup1Button"]]
+[connection signal="mouse_exited" from="CanvasLayer/Control/VBoxContainer/MarginContainer/PanelContainer/MarginContainer/HBoxContainer/Powerup1Button" to="CanvasLayer/Control" method="OnTextureButtonExited" binds= ["Powerup1Button"]]
+[connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/MarginContainer/PanelContainer/MarginContainer/HBoxContainer/Powerup1Button" to="CanvasLayer/Control" method="OnTextureButtonPressed" binds= ["Powerup1Button"]]
+[connection signal="mouse_entered" from="CanvasLayer/Control/VBoxContainer/MarginContainer/PanelContainer/MarginContainer/HBoxContainer/Powerup2Button" to="CanvasLayer/Control" method="OnTextureButtonHovered" binds= ["Powerup2Button"]]
+[connection signal="mouse_exited" from="CanvasLayer/Control/VBoxContainer/MarginContainer/PanelContainer/MarginContainer/HBoxContainer/Powerup2Button" to="CanvasLayer/Control" method="OnTextureButtonExited" binds= ["Powerup2Button"]]
+[connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/MarginContainer/PanelContainer/MarginContainer/HBoxContainer/Powerup2Button" to="CanvasLayer/Control" method="OnTextureButtonPressed" binds= ["Powerup2Button"]]
+[connection signal="mouse_entered" from="CanvasLayer/Control/VBoxContainer/MarginContainer/PanelContainer/MarginContainer/HBoxContainer/YellowConveyorButton" to="CanvasLayer/Control" method="OnTextureButtonHovered" binds= ["YellowConveyorButton"]]
+[connection signal="mouse_exited" from="CanvasLayer/Control/VBoxContainer/MarginContainer/PanelContainer/MarginContainer/HBoxContainer/YellowConveyorButton" to="CanvasLayer/Control" method="OnTextureButtonExited" binds= ["YellowConveyorButton"]]
+[connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/MarginContainer/PanelContainer/MarginContainer/HBoxContainer/YellowConveyorButton" to="CanvasLayer/Control" method="OnTextureButtonPressed" binds= ["YellowConveyorButton"]]
+[connection signal="mouse_entered" from="CanvasLayer/Control/VBoxContainer/MarginContainer/PanelContainer/MarginContainer/HBoxContainer/BlueConveyorButton" to="CanvasLayer/Control" method="OnTextureButtonHovered" binds= ["BlueConveyorButton"]]
+[connection signal="mouse_exited" from="CanvasLayer/Control/VBoxContainer/MarginContainer/PanelContainer/MarginContainer/HBoxContainer/BlueConveyorButton" to="CanvasLayer/Control" method="OnTextureButtonExited" binds= ["BlueConveyorButton"]]
+[connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/MarginContainer/PanelContainer/MarginContainer/HBoxContainer/BlueConveyorButton" to="CanvasLayer/Control" method="OnTextureButtonPressed" binds= ["BlueConveyorButton"]]
+[connection signal="mouse_entered" from="CanvasLayer/Control/VBoxContainer/MarginContainer/PanelContainer/MarginContainer/HBoxContainer/LeftRotateButton" to="CanvasLayer/Control" method="OnTextureButtonHovered" binds= ["LeftRotateButton"]]
+[connection signal="mouse_exited" from="CanvasLayer/Control/VBoxContainer/MarginContainer/PanelContainer/MarginContainer/HBoxContainer/LeftRotateButton" to="CanvasLayer/Control" method="OnTextureButtonExited" binds= ["LeftRotateButton"]]
+[connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/MarginContainer/PanelContainer/MarginContainer/HBoxContainer/LeftRotateButton" to="CanvasLayer/Control" method="OnTextureButtonPressed" binds= ["LeftRotateButton"]]
+[connection signal="mouse_entered" from="CanvasLayer/Control/VBoxContainer/MarginContainer/PanelContainer/MarginContainer/HBoxContainer/RightRotateButton" to="CanvasLayer/Control" method="OnTextureButtonHovered" binds= ["RightRotateButton"]]
+[connection signal="mouse_exited" from="CanvasLayer/Control/VBoxContainer/MarginContainer/PanelContainer/MarginContainer/HBoxContainer/RightRotateButton" to="CanvasLayer/Control" method="OnTextureButtonExited" binds= ["RightRotateButton"]]
+[connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/MarginContainer/PanelContainer/MarginContainer/HBoxContainer/RightRotateButton" to="CanvasLayer/Control" method="OnTextureButtonPressed" binds= ["RightRotateButton"]]
+[connection signal="mouse_entered" from="CanvasLayer/Control/VBoxContainer/MarginContainer/PanelContainer/MarginContainer/HBoxContainer/WallButton" to="CanvasLayer/Control" method="OnTextureButtonHovered" binds= ["WallButton"]]
+[connection signal="mouse_exited" from="CanvasLayer/Control/VBoxContainer/MarginContainer/PanelContainer/MarginContainer/HBoxContainer/WallButton" to="CanvasLayer/Control" method="OnTextureButtonExited" binds= ["WallButton"]]
+[connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/MarginContainer/PanelContainer/MarginContainer/HBoxContainer/WallButton" to="CanvasLayer/Control" method="OnTextureButtonPressed" binds= ["WallButton"]]
+[connection signal="mouse_entered" from="CanvasLayer/Control/VBoxContainer/MarginContainer/PanelContainer/MarginContainer/HBoxContainer/LaserButton" to="CanvasLayer/Control" method="OnTextureButtonHovered" binds= ["LaserButton"]]
+[connection signal="mouse_exited" from="CanvasLayer/Control/VBoxContainer/MarginContainer/PanelContainer/MarginContainer/HBoxContainer/LaserButton" to="CanvasLayer/Control" method="OnTextureButtonExited" binds= ["LaserButton"]]
+[connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/MarginContainer/PanelContainer/MarginContainer/HBoxContainer/LaserButton" to="CanvasLayer/Control" method="OnTextureButtonPressed" binds= ["LaserButton"]]
