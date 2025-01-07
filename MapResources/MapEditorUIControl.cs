@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public partial class MapEditorUIControl : Control
 {	
@@ -10,6 +11,10 @@ public partial class MapEditorUIControl : Control
 	private Label _mapEditorLabel;
 	
 	private string _currentFilePath = string.Empty;
+	
+	// texture button highlighting shaders
+	private List<TextureButton> _textureButtons = new List<TextureButton>();
+	private TextureButton selectedButton = null;
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -43,6 +48,23 @@ public partial class MapEditorUIControl : Control
 		
 		// connect dialog box signal
 		_loadDialog.FileSelected += OnFileSelectedLoadDialog;
+		
+		// texturebutton shaders
+		foreach (Node child in GetNode<HBoxContainer>("VBoxContainer/MarginContainer/PanelContainer/MarginContainer/HBoxContainer").GetChildren())
+		{
+			if (child is TextureButton button)
+			{
+				_textureButtons.Add(button);
+
+				// Ensure each button uses the shader
+				if (button.Material == null)
+				{
+					ShaderMaterial shaderMaterial = new ShaderMaterial();
+					shaderMaterial.Shader = GD.Load<Shader>("res://MapResources/texturebutton_shader.gdshader"); // Update the path
+					button.Material = shaderMaterial;
+				}
+			}
+		}
 	}
 
 	
@@ -137,6 +159,55 @@ public partial class MapEditorUIControl : Control
 	private string FormatFilename(string path) { 
 		int i = path.LastIndexOf('/') + 1;
 		return "Currently Editing: " + path.Substring(i);
+	}
+	
+	public void OnTextureButtonHovered(String buttonName)
+	{
+		if (buttonName != null)
+		{
+			var button = GetNode($"VBoxContainer/MarginContainer/PanelContainer/MarginContainer/HBoxContainer/{buttonName}") as TextureButton;
+			
+			var shaderMaterial = button.Material as ShaderMaterial;
+			if (shaderMaterial != null)
+			{
+				shaderMaterial.SetShaderParameter("is_hovered", true);
+			}
+		}
+	}
+
+	public void OnTextureButtonExited(String buttonName)
+	{
+		if (buttonName != null)
+		{
+			var button = GetNode($"VBoxContainer/MarginContainer/PanelContainer/MarginContainer/HBoxContainer/{buttonName}") as TextureButton;
+			
+			var shaderMaterial = button.Material as ShaderMaterial;
+			if (shaderMaterial != null)
+			{
+				shaderMaterial.SetShaderParameter("is_hovered", false);
+			}
+		}
+	}
+
+	public void OnTextureButtonPressed(String buttonName)
+	{	
+		
+		
+		if (buttonName != null)
+		{
+			var button = GetNode($"VBoxContainer/MarginContainer/PanelContainer/MarginContainer/HBoxContainer/{buttonName}");
+			
+			// Update all buttons
+			foreach (var btn in _textureButtons)
+			{
+				var shaderMaterial = btn.Material as ShaderMaterial;
+				if (shaderMaterial != null)
+				{
+					// Set 'is_selected' true only for the currently pressed button
+					shaderMaterial.SetShaderParameter("is_selected", btn == button);
+				}
+			}
+		}
 	}
 	
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

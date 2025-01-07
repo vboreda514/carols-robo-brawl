@@ -3,7 +3,7 @@ using System;
 
 public partial class MapEditorCamera2D : Camera2D
 {
-	[Export] public float Speed = 450f; // pixels per second movement speed
+	[Export] public float Speed = 700f; // pixels per second movement speed
 	[Export] public float ZoomSpeed = 0.1f; // zoom speed
 
 	public override void _Process(double delta)
