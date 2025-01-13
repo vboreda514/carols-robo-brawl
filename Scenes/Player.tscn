@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://1imwqkl1tn5h"]
+[gd_scene load_steps=3 format=3 uid="uid://cw4qpsuhwcd5e"]
 
 [ext_resource type="Texture2D" uid="uid://cqdybcnfdxiqx" path="res://Assets/crab.png" id="1_g7j4e"]
 
@@ -8,5 +8,5 @@ atlas = ExtResource("1_g7j4e")
 [node name="Player" type="Node2D"]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(2, 2.13333)
+scale = Vector2(4, 4.266)
 texture = SubResource("AtlasTexture_bb1om")

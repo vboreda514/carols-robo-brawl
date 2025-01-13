@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=4 uid="uid://cljrdpwfvqf5b"]
+[gd_scene load_steps=4 format=4 uid="uid://cljrdpwfvqf5b"]
 
 [ext_resource type="PackedScene" uid="uid://b2g7145jihbko" path="res://Scenes/map_scene.tscn" id="1_dskt1"]
+[ext_resource type="TileSet" uid="uid://c3uoreufelchb" path="res://MapResources/map_tileset_floors.tres" id="2_0mu68"]
 
 [sub_resource type="GDScript" id="GDScript_lppge"]
 script/source = "extends Node2D
@@ -32,7 +33,7 @@ var goal_position: Vector2
 func _ready():
 	for position in spawn_positions:
 		var player_instance = player_scene.instantiate()
-		player_instance.position = position * 32 + Vector2(16, 16)
+		player_instance.position = position * 64 + Vector2(32, 32)
 
 		get_parent().add_child(player_instance)
 		player_instances.append(player_instance)
@@ -63,13 +64,13 @@ func _process(delta):
 			elif move.action == \"move_1\":
 				move_forward = true
 				if current_player.rotation < 0.001:
-					goal_position = current_player.position + Vector2(0, 32)
+					goal_position = current_player.position + Vector2(0, 64)
 				elif current_player.rotation - PI / 2 < 0.001:
-					goal_position = current_player.position + Vector2(-32, 0)
+					goal_position = current_player.position + Vector2(-64, 0)
 				elif current_player.rotation - PI < 0.001:
-					goal_position = current_player.position + Vector2(0, -32)
+					goal_position = current_player.position + Vector2(0, -64)
 				elif current_player.rotation - 3 * PI / 2 < 0.001:
-					goal_position = current_player.position + Vector2(32, 0)
+					goal_position = current_player.position + Vector2(64, 0)
 				
 					
 	
@@ -108,4 +109,5 @@ func _process(delta):
 script = SubResource("GDScript_lppge")
 
 [node name="TileMapLayer" parent="." instance=ExtResource("1_dskt1")]
-position = Vector2(160, 160)
+tile_map_data = PackedByteArray("AAAAAAAAAQAKAAAAAAABAAAAAQAKAAAAAAAAAAEAAQAZAAAAAGACAAAAAQAXAAAAAAABAAIAAQAKAAAAAAAAAAIAAQAYAAAAAFACAAIAAQAZAAAAAGACAAMAAQAbAAAAAAACAAQAAQAKAAAAAAAEAAAAAQAIAAAAAAAEAAEAAQAAAAAAAAAEAAQAAQAnAAAAAAADAAQAAQAnAAAAAAADAAMAAQAKAAAAAAADAAAAAQAKAAAAAAABAAQAAQAKAAAAAAAAAAQAAQAYAAAAAFAAAAMAAQAgAAAAAAABAAMAAQAYAAAAAAABAAEAAQAKAAAAAAACAAEAAQAKAAAAAAADAAEAAQALAAAAAAADAAIAAQAKAAAAAAAEAAIAAQAAAAAAAAAEAAMAAQAAAAAAAAAAAAUAAQAZAAAAAFAAAAYAAQAFAAAAAFAAAAcAAQAHAAAAAFABAAUAAQABAAAAADABAAYAAQADAAAAADABAAcAAQABAAAAAFACAAUAAQAKAAAAAAACAAYAAQAHAAAAAAACAAcAAQADAAAAAFADAAUAAQAoAAAAADADAAYAAQAKAAAAAAADAAcAAQAKAAAAAAAEAAUAAQAoAAAAADAEAAYAAQApAAAAAAAEAAcAAQAjAAAAAAAFAAAAAQAAAAAAAGAFAAEAAQAPAAAAAAAFAAIAAQAKAAAAAAAFAAMAAQAKAAAAAAAFAAQAAQAnAAAAAAAFAAUAAQAoAAAAADAFAAYAAQAqAAAAAAAFAAcAAQAjAAAAAGAGAAAAAQAAAAAAAGAGAAEAAQAKAAAAAAAGAAIAAQAKAAAAAAAGAAMAAQAKAAAAAAAGAAQAAQAnAAAAAAAGAAUAAQAoAAAAADAGAAYAAQAKAAAAAAAGAAcAAQAKAAAAAAAHAAAAAQAKAAAAAAAHAAEAAQAKAAAAAAAHAAIAAQAKAAAAAAAHAAMAAQAKAAAAAAAHAAQAAQAKAAAAAAAHAAUAAQAKAAAAAAAHAAYAAQAKAAAAAAAHAAcAAQAKAAAAAAA=")
+tile_set = ExtResource("2_0mu68")
