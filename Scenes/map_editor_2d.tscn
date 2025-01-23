@@ -3,9 +3,9 @@
 [ext_resource type="TileSet" uid="uid://cqqn5nutyyc3d" path="res://MapResources/map_tileset.tres" id="1_h677p"]
 [ext_resource type="TileSet" uid="uid://d0cm0uac8bn62" path="res://MapResources/map_tileset_extras.tres" id="2_badwf"]
 [ext_resource type="Script" path="res://MapResources/MapEditorCamera2D.cs" id="2_d4nrf"]
-[ext_resource type="Theme" path="res://MapResources/mapeditor_theme.tres" id="3_1nu24"]
+[ext_resource type="Theme" uid="uid://vtfme6yy80t1" path="res://MapResources/mapeditor_theme.tres" id="3_1nu24"]
 [ext_resource type="Script" path="res://MapResources/MapEditorUIControl.cs" id="4_a5qs0"]
-[ext_resource type="ButtonGroup" path="res://MapResources/mapeditor_tiles_buttongroup.tres" id="6_h0fub"]
+[ext_resource type="ButtonGroup" uid="uid://bx3raq8kudh14" path="res://MapResources/mapeditor_tiles_buttongroup.tres" id="6_h0fub"]
 [ext_resource type="Texture2D" uid="uid://dfddpnvxtmwn3" path="res://MapResources/MapEditorButtons/floor_button.png" id="7_rv65a"]
 [ext_resource type="Texture2D" uid="uid://bdppaaensywug" path="res://MapResources/MapEditorButtons/spawn_button.png" id="8_5bt61"]
 [ext_resource type="Texture2D" uid="uid://b1mhtjwi870np" path="res://MapResources/MapEditorButtons/flag_button.png" id="9_0tkpf"]
@@ -60,7 +60,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(1, 0.991194)
 theme = ExtResource("3_1nu24")
 script = ExtResource("4_a5qs0")
 
@@ -74,6 +73,7 @@ grow_vertical = 2
 
 [node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/Control/VBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_lttq8")
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/VBoxContainer/PanelContainer"]
@@ -97,10 +97,11 @@ text = "Load Map From File"
 
 [node name="Label" type="Label" parent="CanvasLayer/Control/VBoxContainer/PanelContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 3
+size_flags_horizontal = 6
 size_flags_vertical = 3
 text = "Currently Editing: New Map"
 horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/VBoxContainer"]
 layout_mode = 2
