@@ -1,112 +1,11 @@
 [gd_scene load_steps=4 format=4 uid="uid://cljrdpwfvqf5b"]
 
+[ext_resource type="Script" path="res://Scripts/Game2d.cs" id="1_2oio8"]
 [ext_resource type="PackedScene" uid="uid://b2g7145jihbko" path="res://Scenes/map_scene.tscn" id="1_dskt1"]
 [ext_resource type="TileSet" uid="uid://c3uoreufelchb" path="res://MapResources/map_tileset_floors.tres" id="2_0mu68"]
 
-[sub_resource type="GDScript" id="GDScript_lppge"]
-script/source = "extends Node2D
-
-var player_scene = preload(\"res://Scenes/Player.tscn\")
-
-@export var spawn_positions: Array[Vector2] = [
-	Vector2(0, 0), Vector2(1, 0)
-]
-
-@export var move_sequence: Array = [
-	{\"player_id\": 1, \"action\": \"rotate_right\"},
-	{\"player_id\": 2, \"action\": \"rotate_left\"},
-	{\"player_id\": 2, \"action\": \"move_1\"},
-	{\"player_id\": 1, \"action\": \"u_turn\"}
-]
-
-var player_instances: Array[Node2D]
-var current_player: Node2D
-
-var executing = false
-var rotate_left = false
-var rotate_right = false
-var move_forward = false
-var goal_rotation = 0
-var goal_position: Vector2
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	for position in spawn_positions:
-		var player_instance = player_scene.instantiate()
-		player_instance.position = position * 64 + Vector2(32, 32)
-
-		get_parent().add_child(player_instance)
-		player_instances.append(player_instance)
-
-		print(\"Player spawned at: \", position)
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	if Input.is_action_just_pressed(\"execute\") and not executing:
-		executing = true
-		
-	if executing and not rotate_right and not rotate_left and not move_forward:
-		if move_sequence.size() <= 0:
-			executing = false
-		else:
-			var move = move_sequence.pop_front()
-			current_player = player_instances[move.player_id - 1]
-			if move.action == \"rotate_right\":
-				rotate_right = true
-				goal_rotation = current_player.rotation + PI/2
-			elif move.action == \"rotate_left\":
-				rotate_left = true
-				goal_rotation = current_player.rotation - PI/2
-			elif move.action == \"u_turn\":
-				rotate_right = true
-				goal_rotation = current_player.rotation + PI
-			elif move.action == \"move_1\":
-				move_forward = true
-				if current_player.rotation < 0.001:
-					goal_position = current_player.position + Vector2(0, 64)
-				elif current_player.rotation - PI / 2 < 0.001:
-					goal_position = current_player.position + Vector2(-64, 0)
-				elif current_player.rotation - PI < 0.001:
-					goal_position = current_player.position + Vector2(0, -64)
-				elif current_player.rotation - 3 * PI / 2 < 0.001:
-					goal_position = current_player.position + Vector2(64, 0)
-				
-					
-	
-	if rotate_right:
-		if current_player.rotation < goal_rotation:
-			current_player.rotation += PI/30
-		else:
-			if goal_rotation > 2 * PI:
-				goal_rotation -= 2 * PI
-			current_player.rotation = goal_rotation
-			rotate_right = false
-			
-	elif rotate_left:
-		if current_player.rotation > goal_rotation:
-			current_player.rotation -= PI/30
-		else:
-			if goal_rotation < 0:
-				goal_rotation += 2 * PI
-			current_player.rotation = goal_rotation
-			rotate_left = false
-	
-	elif move_forward:
-		if current_player.position.x < goal_position.x:
-			current_player.position.x += 1
-		elif current_player.position.x > goal_position.x:
-			current_player.position.x -= 1
-		elif current_player.position.y < goal_position.y:
-			current_player.position.y += 1
-		elif current_player.position.y > goal_position.y:
-			current_player.position.y -= 1
-		else:
-			move_forward = false
-"
-
 [node name="Node2D" type="Node2D"]
-script = SubResource("GDScript_lppge")
+script = ExtResource("1_2oio8")
 
 [node name="TileMapLayer" parent="." instance=ExtResource("1_dskt1")]
 tile_map_data = PackedByteArray("AAAAAAAAAQAKAAAAAAABAAAAAQAKAAAAAAAAAAEAAQAZAAAAAGACAAAAAQAXAAAAAAABAAIAAQAKAAAAAAAAAAIAAQAYAAAAAFACAAIAAQAZAAAAAGACAAMAAQAbAAAAAAACAAQAAQAKAAAAAAAEAAAAAQAIAAAAAAAEAAEAAQAAAAAAAAAEAAQAAQAnAAAAAAADAAQAAQAnAAAAAAADAAMAAQAKAAAAAAADAAAAAQAKAAAAAAABAAQAAQAKAAAAAAAAAAQAAQAYAAAAAFAAAAMAAQAgAAAAAAABAAMAAQAYAAAAAAABAAEAAQAKAAAAAAACAAEAAQAKAAAAAAADAAEAAQALAAAAAAADAAIAAQAKAAAAAAAEAAIAAQAAAAAAAAAEAAMAAQAAAAAAAAAAAAUAAQAZAAAAAFAAAAYAAQAFAAAAAFAAAAcAAQAHAAAAAFABAAUAAQABAAAAADABAAYAAQADAAAAADABAAcAAQABAAAAAFACAAUAAQAKAAAAAAACAAYAAQAHAAAAAAACAAcAAQADAAAAAFADAAUAAQAoAAAAADADAAYAAQAKAAAAAAADAAcAAQAKAAAAAAAEAAUAAQAoAAAAADAEAAYAAQApAAAAAAAEAAcAAQAjAAAAAAAFAAAAAQAAAAAAAGAFAAEAAQAPAAAAAAAFAAIAAQAKAAAAAAAFAAMAAQAKAAAAAAAFAAQAAQAnAAAAAAAFAAUAAQAoAAAAADAFAAYAAQAqAAAAAAAFAAcAAQAjAAAAAGAGAAAAAQAAAAAAAGAGAAEAAQAKAAAAAAAGAAIAAQAKAAAAAAAGAAMAAQAKAAAAAAAGAAQAAQAnAAAAAAAGAAUAAQAoAAAAADAGAAYAAQAKAAAAAAAGAAcAAQAKAAAAAAAHAAAAAQAKAAAAAAAHAAEAAQAKAAAAAAAHAAIAAQAKAAAAAAAHAAMAAQAKAAAAAAAHAAQAAQAKAAAAAAAHAAUAAQAKAAAAAAAHAAYAAQAKAAAAAAAHAAcAAQAKAAAAAAA=")
