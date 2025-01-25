@@ -22,7 +22,8 @@ GlobalVariables="*res://Globals/GlobalVariables.cs"
 
 [display]
 
-window/stretch/mode="canvas_items"
+window/size/viewport_width=1920
+window/size/viewport_height=1080
 
 [dotnet]
 

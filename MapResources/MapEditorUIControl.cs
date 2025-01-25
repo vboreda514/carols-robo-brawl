@@ -31,6 +31,7 @@ public partial class MapEditorUIControl : Control
 		_saveDialog.Access = FileDialog.AccessEnum.Userdata;
 		_saveDialog.Filters = new string[] { "*.map;Map Files" };
 		_saveDialog.CurrentDir = ProjectSettings.GlobalizePath(GlobalVariables.MAPEDITOR_SAVE_DIRECTORY);
+		_saveDialog.MinSize = new Vector2I(500, 400);
 		
 		// create the save directory if it doesn't exist
 		DirAccess.MakeDirRecursiveAbsolute(GlobalVariables.MAPEDITOR_SAVE_DIRECTORY);
@@ -45,10 +46,16 @@ public partial class MapEditorUIControl : Control
 		_loadDialog.Access = FileDialog.AccessEnum.Userdata;
 		_loadDialog.Filters = new string[] { "*.map;Map Files" };
 		_loadDialog.CurrentDir = ProjectSettings.GlobalizePath(GlobalVariables.MAPEDITOR_SAVE_DIRECTORY);
+		_loadDialog.MinSize = new Vector2I(500, 400);
 		
 		// connect dialog box signal
 		_loadDialog.FileSelected += OnFileSelectedLoadDialog;
 		
+		GD.Print(_loadDialog.ContentScaleMode);
+		
+		
+		GD.Print(_loadDialog.ContentScaleMode);
+
 		// texturebutton shaders
 		foreach (Node child in GetNode<HBoxContainer>("VBoxContainer/MarginContainer/PanelContainer/MarginContainer/HBoxContainer").GetChildren())
 		{
