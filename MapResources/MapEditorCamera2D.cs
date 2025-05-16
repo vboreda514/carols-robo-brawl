@@ -10,7 +10,7 @@ public partial class MapEditorCamera2D : Camera2D
 	{
 		Vector2 movement = Vector2.Zero;
 
-		// get movement input
+		// Get movement input
 		if (Input.IsActionPressed("ui_left"))
 			movement.X -= 1;
 		if (Input.IsActionPressed("ui_right"))
@@ -20,16 +20,32 @@ public partial class MapEditorCamera2D : Camera2D
 		if (Input.IsActionPressed("ui_down"))
 			movement.Y += 1;
 
-		// normalize and move camera position
+		// Apply movement
 		if (movement != Vector2.Zero)
+		{
 			movement = movement.Normalized();
-			float adjustedSpeed = Speed / Zoom.X; // Increase speed as zoom increases
+			float adjustedSpeed = Speed / Zoom.X; 
 			Position += movement * adjustedSpeed * (float)delta;
+		}
+
+
+		// clamp position manually based on viewport
+		Rect2 viewportRect = GetViewport().GetVisibleRect();
+		Vector2 viewportSize = viewportRect.Size;
+
+		float xMin = LimitLeft + viewportSize.X / (2 * Zoom.X);
+		float xMax = LimitRight - viewportSize.X / (2 * Zoom.X);
+		float yMin = LimitTop + viewportSize.Y / (2 * Zoom.Y);
+	 	float yMax = LimitBottom - viewportSize.Y / (2 * Zoom.Y);
+
+		Position = new Vector2(
+			Mathf.Clamp(Position.X, xMin, xMax),
+			Mathf.Clamp(Position.Y, yMin, yMax)
+		);
 	}
 
 	public override void _UnhandledInput(InputEvent @event)
 	{
-		// mouse wheel zoom
 		if (@event is InputEventMouseButton mouseEvent)
 		{
 			if (mouseEvent.ButtonIndex == MouseButton.WheelUp)
@@ -37,7 +53,6 @@ public partial class MapEditorCamera2D : Camera2D
 			else if (mouseEvent.ButtonIndex == MouseButton.WheelDown)
 				Zoom -= new Vector2(ZoomSpeed, ZoomSpeed);
 
-			// keep zoom within a range
 			Zoom = new Vector2(
 				Mathf.Clamp(Zoom.X, 0.7f, 2.0f),
 				Mathf.Clamp(Zoom.Y, 0.7f, 2.0f)

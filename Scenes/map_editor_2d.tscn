@@ -47,7 +47,10 @@ tile_set = ExtResource("2_badwf")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(3200, 1400)
-limit_smoothed = true
+limit_left = 0
+limit_top = 0
+limit_right = 4672
+limit_bottom = 2816
 position_smoothing_enabled = true
 script = ExtResource("2_d4nrf")
 
@@ -95,11 +98,13 @@ size_flags_vertical = 4
 [node name="Button" type="Button" parent="CanvasLayer/Control/VBoxContainer/PanelContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 4
+focus_mode = 1
 text = "Save Map"
 
 [node name="Button2" type="Button" parent="CanvasLayer/Control/VBoxContainer/PanelContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 4
+focus_mode = 1
 text = "Load Map From File"
 
 [node name="Label" type="Label" parent="CanvasLayer/Control/VBoxContainer/PanelContainer/MarginContainer/HBoxContainer"]
