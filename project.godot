@@ -29,6 +29,10 @@ window/size/viewport_height=1080
 
 project/assembly_name="Carol-s Robo Brawl"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/godot_card_layout/plugin.cfg")
+
 [input]
 
 ui_left={

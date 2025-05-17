@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=4 uid="uid://cljrdpwfvqf5b"]
+[gd_scene load_steps=5 format=4 uid="uid://cljrdpwfvqf5b"]
 
 [ext_resource type="Script" path="res://Scripts/Game2d.cs" id="1_2oio8"]
 [ext_resource type="PackedScene" uid="uid://b2g7145jihbko" path="res://Scenes/map_scene.tscn" id="1_dskt1"]
 [ext_resource type="TileSet" uid="uid://c3uoreufelchb" path="res://MapResources/map_tileset_floors.tres" id="2_0mu68"]
+[ext_resource type="Script" path="res://addons/godot_card_layout/layouts/hand_layout/gcard_hand_layout.gd" id="4_74e8y"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_2oio8")
@@ -10,3 +11,19 @@ script = ExtResource("1_2oio8")
 [node name="TileMapLayer" parent="." instance=ExtResource("1_dskt1")]
 tile_map_data = PackedByteArray("AAAAAAAAAQAKAAAAAAABAAAAAQAKAAAAAAAAAAEAAQAZAAAAAGACAAAAAQAXAAAAAAABAAIAAQAKAAAAAAAAAAIAAQAYAAAAAFACAAIAAQAZAAAAAGACAAMAAQAbAAAAAAACAAQAAQAKAAAAAAAEAAAAAQAIAAAAAAAEAAEAAQAAAAAAAAAEAAQAAQAnAAAAAAADAAQAAQAnAAAAAAADAAMAAQAKAAAAAAADAAAAAQAKAAAAAAABAAQAAQAKAAAAAAAAAAQAAQAYAAAAAFAAAAMAAQAgAAAAAAABAAMAAQAYAAAAAAABAAEAAQAKAAAAAAACAAEAAQAKAAAAAAADAAEAAQALAAAAAAADAAIAAQAKAAAAAAAEAAIAAQAAAAAAAAAEAAMAAQAAAAAAAAAAAAUAAQAZAAAAAFAAAAYAAQAFAAAAAFAAAAcAAQAHAAAAAFABAAUAAQABAAAAADABAAYAAQADAAAAADABAAcAAQABAAAAAFACAAUAAQAKAAAAAAACAAYAAQAHAAAAAAACAAcAAQADAAAAAFADAAUAAQAoAAAAADADAAYAAQAKAAAAAAADAAcAAQAKAAAAAAAEAAUAAQAoAAAAADAEAAYAAQApAAAAAAAEAAcAAQAjAAAAAAAFAAAAAQAAAAAAAGAFAAEAAQAPAAAAAAAFAAIAAQAKAAAAAAAFAAMAAQAKAAAAAAAFAAQAAQAnAAAAAAAFAAUAAQAoAAAAADAFAAYAAQAqAAAAAAAFAAcAAQAjAAAAAGAGAAAAAQAAAAAAAGAGAAEAAQAKAAAAAAAGAAIAAQAKAAAAAAAGAAMAAQAKAAAAAAAGAAQAAQAnAAAAAAAGAAUAAQAoAAAAADAGAAYAAQAKAAAAAAAGAAcAAQAKAAAAAAAHAAAAAQAKAAAAAAAHAAEAAQAKAAAAAAAHAAIAAQAKAAAAAAAHAAMAAQAKAAAAAAAHAAQAAQAKAAAAAAAHAAUAAQAKAAAAAAAHAAYAAQAKAAAAAAAHAAcAAQAKAAAAAAA=")
 tile_set = ExtResource("2_0mu68")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GCardHandLayout" type="Control" parent="CanvasLayer/Control"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("4_74e8y")
