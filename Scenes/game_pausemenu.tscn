@@ -67,3 +67,4 @@ focus_mode = 0
 text = "Exit Game"
 
 [connection signal="pressed" from="Control/VBoxContainer/Button" to="Control" method="OnResumeButtonPressed"]
+[connection signal="pressed" from="Control/VBoxContainer/Button2" to="Control" method="OnExitButtonPressed"]

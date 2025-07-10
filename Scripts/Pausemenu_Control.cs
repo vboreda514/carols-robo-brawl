@@ -19,4 +19,8 @@ public partial class Pausemenu_Control : Control
 	private void OnResumeButtonPressed(){
 		_pausemenu.Visible = false;
 	}
+	
+	private void OnExitButtonPressed(){
+		GetTree().ChangeSceneToFile("res://Scenes/main_menu_control.tscn");
+	}
 }
